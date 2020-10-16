@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/PuerkitoBio/goquery"
 	"stash.tcsbank.ru/a.krutyakov/gen_parse/internal/card"
+	"time"
 )
 
 func New() *HTML {
@@ -14,7 +15,7 @@ func New() *HTML {
 type HTML struct{}
 
 func (x *HTML) Generate(c card.Card) ([]byte, error) {
-	template := fmt.Sprintf("<p>ID<span>%s</span></p>", c.ID)
+	template := fmt.Sprintf( "<span>%s</span><time>%s</time><b>%s</b>", c.ID, c.T.Format(time.RFC3339), c.Name)
 	return []byte(template), nil
 }
 
@@ -25,6 +26,8 @@ func (x *HTML) Parse(b []byte, c *card.Card) error {
 	}
 
 	c.ID = doc.Find("span").Text()
+	c.T, _ = time.Parse(time.RFC3339, doc.Find("time").Text())
+	c.Name = doc.Find("b").Text()
 
 	return nil
 }

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"time"
 
 	"stash.tcsbank.ru/a.krutyakov/gen_parse/internal/card"
 	"stash.tcsbank.ru/a.krutyakov/gen_parse/internal/file"
@@ -20,11 +21,11 @@ type GenParser interface {
 
 func main() {
 	var gp GenParser
-	c := card.Card{ID: "123456789"}
+	c := card.Card{ID: "123456789", T: time.Now(), Name: "Anton"}
 
 	_ = internalJSON.New()
-	_ = internalXML.New()
-	gp = internalHTML.New()
+	gp = internalXML.New()
+	_ = internalHTML.New()
 
 	out := file.NewFile(gp.Ext())
 	//out := os.Stdout
