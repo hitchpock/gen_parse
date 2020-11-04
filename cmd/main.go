@@ -23,8 +23,8 @@ func main() {
 	var gp GenParser
 	c := card.Card{ID: "123456789", T: time.Now(), Name: "Anton"}
 
-	_ = internalJSON.New()
-	gp = internalXML.New()
+	gp = internalJSON.New()
+	_ = internalXML.New()
 	_ = internalHTML.New()
 
 	out := file.NewFile(gp.Ext())
@@ -48,5 +48,4 @@ func main() {
 	}
 
 	fmt.Printf("%+v\n", obj)
-
 }
